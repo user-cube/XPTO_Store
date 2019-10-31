@@ -44,10 +44,20 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request)
-            return redirect('home')
+            return redirect('login')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
 def successregister(request):
     return render(request, 'successregister.html')
+
+def getItem(request):
+    if request.method == 'GET':
+        titulo = request.GET['titulo'];
+        tparams = {
+            'database': Items.objects.filter(titulo=titulo)
+        }
+        return render(request, 'infoItem.html', tparams)
+    else:
+        return redirect('home')
