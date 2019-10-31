@@ -5,12 +5,13 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from app.forms import SignUpForm
-
+from app.models import Items
 
 def home(request):
     tparams = {
         'title': 'Home Page',
         'year': datetime.now().year,
+        'database': Items.objects.all()
     }
     return render(request, 'index.html', tparams)
 
