@@ -26,3 +26,6 @@ def about(request):
         'year': datetime.now().year,
     }
     return render(request, 'about.html', tparams)
+
+def login(request):
+    return render(request, 'login.html')
