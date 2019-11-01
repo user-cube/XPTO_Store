@@ -14,6 +14,10 @@ body {
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
+text{
+    max-width: content-box;
+    align-content: center;
+}
 textarea {
     max-width: 280px;
 }

@@ -2,9 +2,6 @@
 
 {% block headers %}
     <style>
-        * {
-            box-sizing: border-box;
-        }
 
         /* Style the search field */
         form.example input[type=text] {
@@ -43,16 +40,17 @@
 {% endblock %}
 
 {% block content %}
-    <div class="col-lg-12">
+    <div class="col-lg-11 offset-1">
             <form class="example" action="/search" method="get">
                 <input type="text" placeholder="Search.." name="search">
                 <button type="submit"><i class="fa fa-search"></i></button>
             </form>
         </div>
+    <br>
     <div class="row">
         {% for row in database %}
             <div class="col-md-3 offset-1">
-                <div class="card" style="width: 18rem;">
+                <div class="card" style="width: border-box">
                     <img class="card-img-top" src="{{ row.image }}" style="height: 280px" alt="{{ row.titulo}}">
                     <div class="card-body">
                         <h5 class="card-title">{{ row.titulo }}</h5>
