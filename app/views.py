@@ -55,7 +55,7 @@ def getItem(request):
     if request.method == 'GET':
         titulo = request.GET['titulo']
         tparams = {
-            'database': Items.objects.filter(titulo=titulo)
+            'database': Items.objects.filter(id=titulo)
         }
         return render(request, 'infoItem.html', tparams)
     else:
