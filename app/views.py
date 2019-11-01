@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from app.forms import SignUpForm
 from app.models import Items
 
+
 def home(request):
     tparams = {
         'title': 'Home Page',
@@ -14,6 +15,7 @@ def home(request):
         'database': Items.objects.all()
     }
     return render(request, 'index.html', tparams)
+
 
 def contact(request):
     tparams = {
@@ -31,8 +33,10 @@ def about(request):
     }
     return render(request, 'about.html', tparams)
 
+
 def login(request):
     return render(request, 'login.html')
+
 
 def signup(request):
     if request.method == 'POST':
@@ -48,8 +52,10 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
+
 def successregister(request):
     return render(request, 'successregister.html')
+
 
 def getItem(request):
     if request.method == 'GET':
@@ -60,6 +66,7 @@ def getItem(request):
         return render(request, 'infoItem.html', tparams)
     else:
         return redirect('home')
+
 
 def search(request):
     if request.method == 'GET':

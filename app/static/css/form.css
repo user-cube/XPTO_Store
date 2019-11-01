@@ -104,15 +104,15 @@
 }
 
 .form-style-5 input[type=text] {
-  width: 100%;
-  padding: 12px 20px;
-  box-sizing: initial;
+    width: 100%;
+    padding: 12px 20px;
+    box-sizing: initial;
 }
 
 .form-style-5 input[type=password] {
-  width: 100%;
-  padding: 12px 20px;
-  box-sizing: initial;
+    width: 100%;
+    padding: 12px 20px;
+    box-sizing: initial;
 }
 
 .form-style-5 input[type="submit"]:hover,
