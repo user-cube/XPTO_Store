@@ -53,10 +53,20 @@ def successregister(request):
 
 def getItem(request):
     if request.method == 'GET':
-        titulo = request.GET['titulo'];
+        titulo = request.GET['titulo']
         tparams = {
             'database': Items.objects.filter(titulo=titulo)
         }
         return render(request, 'infoItem.html', tparams)
+    else:
+        return redirect('home')
+
+def search(request):
+    if request.method == 'GET':
+        pesquisa = request.GET['search']
+        tparams = {
+            'database': Items.objects.filter(titulo__contains=pesquisa)
+        }
+        return render(request, 'search.html', tparams)
     else:
         return redirect('home')
