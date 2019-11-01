@@ -35,11 +35,11 @@
                     </li>
                     <li {% if request.resolver_match.url_name == 'about' %}class="nav-item active"
                         {% else %}class="nav-item"{% endif %}>
-                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                        <a class="nav-link" href="{% url 'about' %}">About Us</a>
                     </li>
-                    <li {% if request.resolver_match.url_name == 'contact' %}class="nav-item active"
+                    <li {% if request.resolver_match.url_name == 'find' %}class="nav-item active"
                         {% else %}class="nav-item"{% endif %}>
-                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                        <a class="nav-link" href="{% url 'find' %}">Find Us</a>
                     </li>
                 </ul>
                 {% include 'loginpartial.html' %}
