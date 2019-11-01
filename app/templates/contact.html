@@ -1,22 +1,42 @@
 {% extends "layout.html" %}
 
+{% block headers %}
+    <style> .myFrame {
+        width: 100%;
+        height: 460px;
+        border: none;
+    }</style>
+{% endblock %}
+
 {% block content %}
 
-<h2>{{ title }}.</h2>
-<h3>{{ message }}</h3>
+    <h2 style="text-align: center">{{ title }}</h2>
 
-<address>
-    JetBrains Americas, Inc.<br />
-    West Coast<br />
-    989 East Hillsdale Blvd. Suite 200<br />
-    Foster City, CA 94404<br />
-    <abbr title="Phone">P:</abbr>
-    +420 2 4172 2501
-</address>
+    <hr>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-1">
+                <iframe class="myFrame"
+                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDct-K2SVeeXsHqtGfdf2R7VvOyWzPXzI4
+                &q=lojaua, Aveiro, PT">
+                </iframe>
+            </div>
+            <div class="col-lg-3">
+                <address>
+                    XPTO Store, Inc.<br/>
+                    Aveiro<br/>
+                    Universidade de Aveiro<br/>
+                    Aveiro, 3810-310<br/>
+                    <abbr title="Phone">P:</abbr>
+                    +351 253 383 383
+                </address>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
-
+                <address>
+                    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br/>
+                    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+                </address>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -17,8 +17,7 @@ def home(request):
 
 def contact(request):
     tparams = {
-        'title': 'Contact',
-        'message': 'Your contact page.',
+        'title': 'Find Us',
         'year': datetime.now().year,
     }
     return render(request, 'contact.html', tparams)
@@ -26,7 +25,7 @@ def contact(request):
 
 def about(request):
     tparams = {
-        'title': 'About',
+        'title': 'About Us',
         'message': 'Your application description page.',
         'year': datetime.now().year,
     }
