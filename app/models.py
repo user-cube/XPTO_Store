@@ -1,6 +1,10 @@
+import datetime
+
 from django.db import models
 
 # Create your models here.
+from django.http import request
+
 
 class Items(models.Model):
     titulo = models.CharField(max_length=70)
@@ -12,13 +16,12 @@ class Items(models.Model):
     def __str__(self):
         return self.titulo
 
-class Carrinho(models.Model):
-    id = models.AutoField(primary_key=True)
-    autor = models.CharField(null=False, max_length=50)
-    item = models.ForeignKey(Items, on_delete=models.CASCADE)
-    quantidade = models.IntegerField(default=1)
-    unitValue = models.DecimalField(max_digits=11, decimal_places=2, default=1)
-    total = models.DecimalField(max_digits=11, decimal_places=2, default=1)
+class Profile(models.Model):
+    nome = models.CharField(null=False, max_length=50)
+    picture = models.ImageField(upload_to='app/static/img/profile_pictures/'+ str(hash(datetime.datetime.now())) + "/", default='app/static/img/default.jpg')
+    morada = models.CharField(max_length=100)
+    zipcode = models.CharField(max_length=20)
+    pais = models.CharField(max_length=25)
 
     def __str__(self):
-        return self.autor
+        return self.nome

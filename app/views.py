@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from app.forms import SignUpForm
-from app.models import Items
+from app.models import Items, Profile
 
 
 def home(request):
@@ -47,7 +47,15 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request)
+
+            profiler = Profile(nome=request.POST['username'],
+                               picture='static/img/default.jpg',
+                               morada=request.POST['morada'],
+                               zipcode=request.POST['zipcode'],
+                               pais=request.POST['pais'])
+            profiler.save()
             return redirect('login')
+
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
@@ -77,3 +85,12 @@ def search(request):
         return render(request, 'search.html', tparams)
     else:
         return redirect('home')
+
+def getProfile(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else:
+        tparams = {
+            'database': Profile.objects.filter(nome=request.user)
+        }
+        return render(request, 'profile.html', tparams)
