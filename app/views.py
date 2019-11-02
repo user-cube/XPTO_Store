@@ -132,6 +132,7 @@ def updateProfile(request):
             }
             return redirect('profileedit')
 
+
 def painel(request):
     if request.user.is_authenticated and request.user.is_superuser:
         tparams = {
@@ -141,17 +142,32 @@ def painel(request):
     else:
         return redirect('home')
 
+
 def addProducts(request):
     if request.user.is_authenticated and request.user.is_superuser:
-        return redirect('home')
+        return render(request, 'addItem.html')
     else:
         return redirect('home')
+
+
+def processAdd(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated and request.user.is_superuser:
+            adder = Items(titulo=request.POST['titulo'], short=request.POST['short'],
+                          descricao=request.POST['descricao'], preco=request.POST['preco'],
+                          picture=request.FILES['picture'])
+            adder.save()
+            return redirect('adminpanel')
+    else:
+        return redirect('home')
+
 
 def editProducts(request):
     if request.user.is_authenticated and request.user.is_superuser:
         return redirect('home')
     else:
         return redirect('home')
+
 
 def removeProducts(request):
     if request.user.is_authenticated and request.user.is_superuser:

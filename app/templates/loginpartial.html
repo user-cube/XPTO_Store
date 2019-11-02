@@ -2,6 +2,12 @@
     <form id="logoutForm" action="/logout" method="post" class="navbar-right">
         {% csrf_token %}
         <ul class="navbar-nav mr-auto">
+            {% if user.is_superuser %}
+                <li {% if request.resolver_match.url_name == 'adminPanel' %}class="nav-item active"
+                    {% else %}class="nav-item"{% endif %}>
+                    <a class="nav-link" href="{% url 'adminpanel' %}">Admin Panel</a>
+                </li>
+            {% endif %}
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
