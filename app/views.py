@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from app.forms import SignUpForm
 from app.models import Items, Profile
 
+
 def home(request):
     tparams = {
         'title': 'Home Page',
@@ -93,15 +94,17 @@ def getProfile(request):
         }
         return render(request, 'profile.html', tparams)
 
+
 def editprofile(request):
     if not request.user.is_authenticated:
         return redirect('login')
     else:
         tparams = {
             'database': Profile.objects.filter(user=request.user),
-            'user' : request.user
+            'user': request.user
         }
         return render(request, 'editProfile.html', tparams)
+
 
 def updateProfile(request):
     if request.method == 'POST':
