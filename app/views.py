@@ -86,6 +86,7 @@ def search(request):
     else:
         return redirect('home')
 
+
 def getProfile(request):
     if not request.user.is_authenticated:
         return redirect('login')

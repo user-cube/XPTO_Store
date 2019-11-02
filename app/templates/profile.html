@@ -1,12 +1,12 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-{% for row in database %}
-    <p>{{ row.nome }}</p>
-    {% load safeTools %}
-    <img src="{{ row.picture | spliter }}">
-    <p>{{ row.morada }}</p>
-    <p>{{ row.zipcode }}</p>
-    <p>{{ row.pais }}</p>
-{% endfor %}
+    {% for row in database %}
+        <p>{{ row.nome }}</p>
+        {% load safeTools %}
+        <img src="{{ row.picture | spliter }}">
+        <p>{{ row.morada }}</p>
+        <p>{{ row.zipcode }}</p>
+        <p>{{ row.pais }}</p>
+    {% endfor %}
 {% endblock %}
