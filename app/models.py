@@ -18,7 +18,8 @@ class Items(models.Model):
 
 
 class Profile(models.Model):
-    nome = models.CharField(null=False, max_length=50)
+    nome = models.CharField(max_length=50)
+    user = models.CharField(max_length=50)
     picture = models.ImageField(
         upload_to='app/static/img/profile_pictures/' + str(hash(datetime.datetime.now())) + "/",
         default='app/static/img/default.jpg')

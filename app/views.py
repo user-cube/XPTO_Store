@@ -1,12 +1,10 @@
 from datetime import datetime
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 
 # Create your views here.
 from app.forms import SignUpForm
 from app.models import Items, Profile
-
 
 def home(request):
     tparams = {
@@ -46,10 +44,9 @@ def signup(request):
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
-            login(request)
-
-            profiler = Profile(nome=request.POST['username'],
-                               picture='static/img/default.jpg',
+            profiler = Profile(nome=request.POST['first_name'],
+                               user=request.POST['username'],
+                               picture='app/static/img/default.jpg',
                                morada=request.POST['morada'],
                                zipcode=request.POST['zipcode'],
                                pais=request.POST['pais'])
@@ -92,6 +89,42 @@ def getProfile(request):
         return redirect('login')
     else:
         tparams = {
-            'database': Profile.objects.filter(nome=request.user)
+            'database': Profile.objects.filter(user=request.user)
         }
         return render(request, 'profile.html', tparams)
+
+def editprofile(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else:
+        tparams = {
+            'database': Profile.objects.filter(user=request.user),
+            'user' : request.user
+        }
+        return render(request, 'editProfile.html', tparams)
+
+def updateProfile(request):
+    if request.method == 'POST':
+        if str(request.POST['user']) == str(request.user):
+            profiler = Profile.objects.get(user=request.user)
+            if 'nome' in request.POST:
+                profiler.nome = request.POST['nome']
+                profiler.save()
+            if 'morada' in request.POST:
+                profiler.morada = request.POST['zipcode']
+                profiler.save()
+            if 'zipcode' in request.POST:
+                profiler.zipcode = request.POST['zipcode']
+                profiler.save()
+            if 'pais' in request.POST:
+                profiler.pais = request.POST['pais']
+                profiler.save()
+            if 'picture' in request.FILES:
+                profiler.picture = request.FILES['picture']
+                profiler.save()
+
+            tparams = {
+                'database': Profile.objects.filter(user=request.user),
+                'user': request.user
+            }
+            return redirect('profileedit')

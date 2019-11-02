@@ -29,5 +29,7 @@ urlpatterns = [
     path('successregister/', views.successregister, name="successregister"),
     path('infoItem', views.getItem, name='infoitem'),
     path('search', views.search, name='search'),
-    path('profile/', views.getProfile, name="profile")
+    path('profile/', views.getProfile, name="profile"),
+    path('profileedit/', views.editprofile, name="profileedit"),
+    path('updateProfile', views.updateProfile, name="updateProfile")
 ]
