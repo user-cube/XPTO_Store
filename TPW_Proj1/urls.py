@@ -31,5 +31,6 @@ urlpatterns = [
     path('search', views.search, name='search'),
     path('profile/', views.getProfile, name="profile"),
     path('profileedit/', views.editprofile, name="profileedit"),
-    path('updateProfile', views.updateProfile, name="updateProfile")
+    path('updateProfile', views.updateProfile, name="updateProfile"),
+    path('adminPanel/',views.painel, name='adminpanel')
 ]

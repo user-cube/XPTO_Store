@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% block headers %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+{% block content %}
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th><a href="/additem" class="btn btn-primary"> Add Item</a></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Editar</th>
+            <th>Apagar</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in database %}
+            <tr>
+                <td>{{ row.id }}</td>
+                <td>{{ row.titulo }}</td>
+                <td><a href="/edititem?id={{ row.id }}" class="btn btn-primary"><i class="fa fa-edit"></i></a></td>
+                <td><a href="/removeitem?id={{ row.id }}" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

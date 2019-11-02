@@ -131,3 +131,30 @@ def updateProfile(request):
                 'user': request.user
             }
             return redirect('profileedit')
+
+def painel(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        tparams = {
+            'database': Items.objects.all()
+        }
+        return render(request, 'adminPanel.html', tparams)
+    else:
+        return redirect('home')
+
+def addProducts(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        return redirect('home')
+    else:
+        return redirect('home')
+
+def editProducts(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        return redirect('home')
+    else:
+        return redirect('home')
+
+def removeProducts(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        return redirect('home')
+    else:
+        return redirect('home')
