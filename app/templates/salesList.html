@@ -1,7 +1,56 @@
 {% extends "layout.html" %}
 
+{% block headers %}
+    <style>
+
+        /* Style the search field */
+        form.example input[type=text] {
+            padding: 10px;
+            font-size: 17px;
+            border: 1px solid grey;
+            float: left;
+            width: 80%;
+            background: #f1f1f1;
+        }
+
+        /* Style the submit button */
+        form.example button {
+            float: left;
+            width: 20%;
+            padding: 10px;
+            background: #2196F3;
+            color: white;
+            font-size: 17px;
+            border: 1px solid grey;
+            border-left: none; /* Prevent double borders */
+            cursor: pointer;
+        }
+
+        form.example button:hover {
+            background: #0b7dda;
+        }
+
+        /* Clear floats */
+        form.example::after {
+            content: "";
+            clear: both;
+            display: table;
+        }</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
 {% block content %}
     <h2>Items Bought</h2>
+
+    <div class="col-lg-12">
+        <form class="example" action="/boughtSearch" method="get">
+            <input type="text" placeholder="Search.." name="search">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+    <br>
+
+
     <div class="table-responsive">
         <table class="table">
             <thead>
@@ -10,6 +59,9 @@
                 <th>Quantity</th>
                 <th>Price</th>
                 <th>Total</th>
+                {% if user.is_superuser %}
+                    <th>User</th>
+                {% endif %}
                 <th>Date</th>
             </tr>
             </thead>
@@ -19,7 +71,10 @@
                     <td><a href="/infoItem?titulo={{ row.produtos.id }}">{{ row.produtos.titulo }}</a></td>
                     <td>{{ row.quantidade }}</td>
                     <td>{{ row.preco }}</td>
-                    <td>{{ row.total}}</td>
+                    <td>{{ row.total }}</td>
+                    {% if user.is_superuser %}
+                        <td>{{ row.user }}</td>
+                    {% endif %}
                     <td>{{ row.data }}</td>
                 </tr>
             {% endfor %}

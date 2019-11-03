@@ -43,5 +43,6 @@ urlpatterns = [
     path('removecart', views.removeCart, name="removecart"),
     path('shoppingcart/', views.shoppingCart, name="shoppingcart"),
     path('checkout/', views.checkout, name="checkout"),
-    path('boughtlist/', views.bought, name="boughtlist")
+    path('boughtlist/', views.bought, name="boughtlist"),
+    path('boughtSearch', views.boughtSearch, name="boughtSearch")
 ]

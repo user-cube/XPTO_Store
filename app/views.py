@@ -276,8 +276,38 @@ def checkout(request):
 
 
 def bought(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    if request.user.is_superuser:
+        database = Encomenda.objects.all()
+    else:
+        database = Encomenda.objects.filter(user=request.user)
     tparams = {
-        "database": Encomenda.objects.all(),
+        "database": database,
+        "year": datetime.now().year
+    }
+
+    return render(request, "salesList.html", tparams)
+
+
+def boughtSearch(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    if request.method == "GET":
+        pesquisa = request.GET['search']
+        if request.user.is_superuser:
+            database = Encomenda.objects.filter(produtos__titulo__contains=pesquisa)
+        else:
+            database = Encomenda.objects.filter(user=request.user, produtos__titulo__contains=pesquisa)
+
+    else:
+        if request.user.is_superuser:
+            database = Encomenda.objects.all()
+        else:
+            database = Encomenda.objects.filter(user=request.user)
+    tparams = {
+        "database": database,
         "year": datetime.now().year
     }
     return render(request, "salesList.html", tparams)
