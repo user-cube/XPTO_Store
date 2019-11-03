@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from app.forms import SignUpForm
-from app.models import Items, Profile
+from app.models import Items, Profile, Encomenda
 
 
 def home(request):
@@ -262,10 +262,8 @@ def checkout(request):
     if not request.user.is_authenticated:
         return redirect('login')
     else:
-        #Criar encomenda
         for i in request.session['products']:
-            prod=Items.objects.get(id=i)
-            print(prod)
-            #encomenda.produtos.add(prod)
+            adder = Encomenda(user=request.user, produtos=Items.objects.get(id=i))
+            adder.save()
             request.session.__setitem__('products',[])
         return redirect('home')
