@@ -213,3 +213,13 @@ def removeProducts(request):
             return redirect('home')
     else:
         return redirect('home')
+
+def searchAdmin(request):
+    if request.method == 'GET':
+        pesquisa = request.GET['search']
+        tparams = {
+            'database': Items.objects.filter(titulo__contains=pesquisa)
+        }
+        return render(request, 'searchAdmin.html', tparams)
+    else:
+        return redirect('home')

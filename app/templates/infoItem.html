@@ -2,8 +2,9 @@
 
 {% block content %}
 {% for row in database %}
+    {% load safeTools %}
     <div class="jumbotron"
-         style="background-image: url('{{ row.image}}');
+         style="background-image: url('{{ row.picture | spliter }}');
                  background-size: cover;
                  background-repeat: no-repeat;
                  background-position: center;

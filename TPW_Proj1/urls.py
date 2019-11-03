@@ -37,5 +37,6 @@ urlpatterns = [
     path('processadd', views.processAdd, name='processadd'),
     path('deleteitem/', views.removeProducts, name='deleteitem'),
     path('edititem/', views.editProducts, name='edititem'),
-    path('processedit', views.processEdit, name='processedit')
+    path('processedit', views.processEdit, name='processedit'),
+    path('searchadmin/', views.searchAdmin, name='searchadmin')
 ]

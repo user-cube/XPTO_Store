@@ -29,7 +29,8 @@
 
             <div class="collapse navbar-collapse" id="navbarDefault">
                 <ul class="navbar-nav mr-auto">
-                    <li {% if request.resolver_match.url_name == 'home' %}class="nav-item active"
+                    <li {% if request.resolver_match.url_name == 'home' %}class="nav-item active"{% endif %}
+                        {% if request.resolver_match.url_name == 'search' %}class="nav-item active"
                         {% else %}class="nav-item"{% endif %}>
                         <a class="nav-link" href="{% url 'home' %}">Home</a>
                     </li>
