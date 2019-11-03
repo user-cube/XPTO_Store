@@ -264,7 +264,8 @@ def checkout(request):
     else:
         #Criar encomenda
         for i in request.session['products']:
-            prod=Items.objects.get(id=i)[0]
+            prod=Items.objects.get(id=i)
+            print(prod)
             #encomenda.produtos.add(prod)
             request.session.__setitem__('products',[])
         return redirect('home')
