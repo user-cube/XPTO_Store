@@ -158,19 +158,58 @@ def processAdd(request):
                           picture=request.FILES['picture'])
             adder.save()
             return redirect('adminpanel')
+        else:
+            return redirect('home')
     else:
         return redirect('home')
 
 
 def editProducts(request):
-    if request.user.is_authenticated and request.user.is_superuser:
+    if request.method == 'GET':
+        if request.user.is_authenticated and request.user.is_superuser:
+            tparams = {
+                'database': Items.objects.filter(id=request.GET['id'])
+            }
+            return render(request, 'editItem.html', tparams)
+        else:
+            return redirect('home')
+    else:
         return redirect('home')
+
+
+def processEdit(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated and request.user.is_superuser:
+            items = Items.objects.get(id=request.POST['id'])
+            if 'titulo' in request.POST:
+                items.titulo = request.POST['titulo']
+                items.save()
+            if 'short' in request.POST:
+                items.short = request.POST['short']
+                items.save()
+            if 'descricao' in request.POST:
+                items.descricao = request.POST['descricao']
+                items.save()
+            if 'preco' in request.POST:
+                items.preco = request.POST['preco']
+                items.save()
+            if 'picture' in request.FILES:
+                items.picture = request.FILES['picture']
+                items.save()
+
+            return redirect('/edititem?id=' + request.POST['id'])
+        else:
+            return redirect('home')
     else:
         return redirect('home')
 
 
 def removeProducts(request):
-    if request.user.is_authenticated and request.user.is_superuser:
-        return redirect('home')
+    if request.method == 'GET':
+        if request.user.is_authenticated and request.user.is_superuser:
+            Items.objects.get(id=request.GET['id']).delete()
+            return redirect('adminpanel')
+        else:
+            return redirect('home')
     else:
         return redirect('home')

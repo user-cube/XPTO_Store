@@ -34,5 +34,8 @@ urlpatterns = [
     path('updateProfile', views.updateProfile, name="updateProfile"),
     path('adminPanel/',views.painel, name='adminpanel'),
     path('additem/', views.addProducts, name='additem'),
-    path('processadd', views.processAdd, name='processadd')
+    path('processadd', views.processAdd, name='processadd'),
+    path('deleteitem/', views.removeProducts, name='deleteitem'),
+    path('edititem/', views.editProducts, name='edititem'),
+    path('processedit', views.processEdit, name='processedit')
 ]
