@@ -2,6 +2,7 @@ import datetime
 
 from django.db import models
 
+
 # Create your models here.
 
 class Items(models.Model):
@@ -30,6 +31,7 @@ class Profile(models.Model):
     def __str__(self):
         return self.nome
 
+
 class wishlist(models.Model):
     item = models.ForeignKey(Items, on_delete=models.CASCADE)
     user = models.CharField(max_length=50)
@@ -37,11 +39,12 @@ class wishlist(models.Model):
     def __str__(self):
         return self.user
 
+
 class Encomenda(models.Model):
-    data=models.DateField(auto_now=True)
+    data = models.DateField(auto_now=True)
     produtos = models.ForeignKey(Items, on_delete=models.CASCADE)
     user = models.CharField(max_length=50)
-    quantidade = models.IntegerField(max_length=10, default=1)
+    quantidade = models.IntegerField(default=1)
     preco = models.DecimalField(max_digits=11, decimal_places=2, default=0)
     total = models.DecimalField(max_digits=11, decimal_places=2, default=0)
 

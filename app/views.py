@@ -214,6 +214,7 @@ def removeProducts(request):
     else:
         return redirect('home')
 
+
 def searchAdmin(request):
     if request.method == 'GET':
         pesquisa = request.GET['search']
@@ -224,46 +225,59 @@ def searchAdmin(request):
     else:
         return redirect('home')
 
+
 def addCart(request):
-    id=request.POST['id']
+    id = request.POST['id']
     if 'products' in request.session.keys():
-        prods=request.session.__getitem__('products')
+        prods = request.session.__getitem__('products')
         prods.append(id)
         request.session.__setitem__('products', prods)
         print(request.session['products'])
     else:
-        request.session.__setitem__('products',[])
+        request.session.__setitem__('products', [])
     return redirect('home')
+
 
 def removeCart(request):
     if request.method == 'POST':
         index = request.POST['index']
-        products=request.session['products']
+        products = request.session['products']
         products.pop(int(index))
-        request.session.__setitem__('products',products)
+        request.session.__setitem__('products', products)
     return redirect('shoppingcart')
+
 
 def shoppingCart(request):
     if 'products' not in request.session.keys():
         return
-    total=0
+    total = 0
     items = []
     for i in request.session['products']:
-        prod=Items.objects.get(id=i)
+        prod = Items.objects.get(id=i)
         items.append(prod)
-        total+=prod.preco
-    tparams={
-        'shoppingbag':items,
-        'total':total
+        total += prod.preco
+    tparams = {
+        'shoppingbag': items,
+        'total': total
     }
-    return render(request,'shoppingCart.html',tparams)
+    return render(request, 'shoppingCart.html', tparams)
+
 
 def checkout(request):
     if not request.user.is_authenticated:
         return redirect('login')
-    else:
-        for i in request.session['products']:
-            adder = Encomenda(user=request.user, produtos=Items.objects.get(id=i))
-            adder.save()
-            request.session.__setitem__('products',[])
-        return redirect('home')
+    for i in request.session['products']:
+        adder = Encomenda(user=request.user, produtos=Items.objects.get(id=i))
+        adder.preco = Items.objects.get(id=i).preco
+        adder.total = adder.preco * adder.quantidade
+        adder.save()
+        request.session.__setitem__('products', [])
+    return redirect('boughtlist')
+
+
+def bought(request):
+    tparams = {
+        "database": Encomenda.objects.all(),
+        "year": datetime.now().year
+    }
+    return render(request, "salesList.html", tparams)

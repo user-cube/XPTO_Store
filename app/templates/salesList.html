@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h2>Items Bought</h2>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in database %}
+                <tr>
+                    <td><a href="/infoItem?titulo={{ row.produtos.id }}">{{ row.produtos.titulo }}</a></td>
+                    <td>{{ row.quantidade }}</td>
+                    <td>{{ row.preco }}</td>
+                    <td>{{ row.total}}</td>
+                    <td>{{ row.data }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
