@@ -1,20 +1,23 @@
 {% extends "layout.html" %}
+{% block headers %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
 
 {% block content %}
-{% for row in database %}
-    {% load safeTools %}
-    <div class="jumbotron"
-         style="background-image: url('{{ row.picture | spliter }}');
-                 background-size: cover;
-                 background-repeat: no-repeat;
-                 background-position: center;
-                 height: 400px;">
-     </div>
-    <div class="container">
-        <h1 style="text-align: center">{{ row.titulo }}</h1>
-        <h2> {{ row.preco }}€</h2>
-        <h5> {{ row.descricao }}</h5>
-    </div>
+    {% for row in database %}
+        {% load safeTools %}
+        <div class="jumbotron"
+             style="background-image: url('{{ row.picture | spliter }}');
+                     background-size: cover;
+                     background-repeat: no-repeat;
+                     background-position: center;
+                     height: 400px;">
+        </div>
+        <div class="container">
+            <h1 style="text-align: center">{{ row.titulo }}</h1>
+            <h2> {{ row.preco }}€</h2>
+            <h5> {{ row.descricao }}</h5>
+        </div>
     {% endfor %}
 
 {% endblock %}

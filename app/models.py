@@ -5,6 +5,8 @@ from django.db import models
 # Create your models here.
 from django.http import request
 
+from TPW_Proj1 import settings
+
 
 class Items(models.Model):
     titulo = models.CharField(max_length=70)
@@ -31,3 +33,10 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.nome
+
+class wishlist(models.Model):
+    item = models.ForeignKey(Items, on_delete=models.CASCADE)
+    user = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.user
