@@ -223,3 +223,48 @@ def searchAdmin(request):
         return render(request, 'searchAdmin.html', tparams)
     else:
         return redirect('home')
+
+def addCart(request):
+    id=request.POST['id']
+    if 'products' in request.session.keys():
+        prods=request.session.__getitem__('products')
+        prods.append(id)
+        request.session.__setitem__('products', prods)
+        print(request.session['products'])
+    else:
+        request.session.__setitem__('products',[])
+    return redirect('home')
+
+def removeCart(request):
+    if request.method == 'POST':
+        index = request.POST['index']
+        products=request.session['products']
+        products.pop(int(index))
+        request.session.__setitem__('products',products)
+    return redirect('shoppingcart')
+
+def shoppingCart(request):
+    if 'products' not in request.session.keys():
+        return
+    total=0
+    items = []
+    for i in request.session['products']:
+        prod=Items.objects.get(id=i)
+        items.append(prod)
+        total+=prod.preco
+    tparams={
+        'shoppingbag':items,
+        'total':total
+    }
+    return render(request,'shoppingCart.html',tparams)
+
+def checkout(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else:
+        #Criar encomenda
+        for i in request.session['products']:
+            prod=Items.objects.get(id=i)[0]
+            #encomenda.produtos.add(prod)
+            request.session.__setitem__('products',[])
+        return redirect('home')

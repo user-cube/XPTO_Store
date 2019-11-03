@@ -40,3 +40,10 @@ class wishlist(models.Model):
 
     def __str__(self):
         return self.user
+
+class Encomenda(models.Model):
+    data=models.DateField(auto_now=True)
+    produtos=models.ManyToManyField(Items)
+
+    def __str__(self):
+        return self.id.__str__()

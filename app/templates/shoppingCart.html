@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <table class="table">
+      <tbody>
+      {% for product in shoppingbag %}
+        <tr>
+            <td>{{ product.titulo }}</td>
+            <td>{{ product.preco }} €</td>
+            <td>
+                <form action='/removecart' method='post'>
+                    {% csrf_token %}
+                    <input name='id' value="{{ item.id }}" hidden>
+                    <input name='index' value="{{ forloop.counter0 }}" hidden>
+                <th><button type="submit" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></th>
+            </form>
+            </td>
+        </tr>
+      {% endfor %}
+      <tr>
+          <td>Total</td>
+          <td>{{ total }} €</td>
+          <td><a href="/checkout" class="btn btn-primary"> Checkout</a></td>
+      </tr>
+      </tbody>
+    </table>
+{% endblock %}

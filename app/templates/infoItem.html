@@ -18,6 +18,11 @@
             <h2> {{ row.preco }}€</h2>
             <h5> {{ row.descricao }}</h5>
         </div>
+        <form action="addcart" method='post'>
+            {% csrf_token %}
+            <input name='id' value="{{ row.id }}" hidden>
+            <button type="submit" class="btn btn-primary"> Add to cart</button>
+        </form>
     {% endfor %}
 
 {% endblock %}

@@ -38,5 +38,9 @@ urlpatterns = [
     path('deleteitem/', views.removeProducts, name='deleteitem'),
     path('edititem/', views.editProducts, name='edititem'),
     path('processedit', views.processEdit, name='processedit'),
-    path('searchadmin/', views.searchAdmin, name='searchadmin')
+    path('searchadmin/', views.searchAdmin, name='searchadmin'),
+    path('addcart',views.addCart,name="addcart"),
+    path('removecart',views.removeCart,name="removecart"),
+    path('shoppingcart/',views.shoppingCart,name="shoppingcart"),
+    path('checkout/',views.checkout,name="checkout")
 ]
