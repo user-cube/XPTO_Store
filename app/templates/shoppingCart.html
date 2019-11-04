@@ -14,16 +14,15 @@
             <tr>
                 <td>{{ product.titulo }}</td>
                 <td>{{ product.preco }} €</td>
+                <td></td>
                 <td>
                     <form action='/removecart' method='post'>
                         {% csrf_token %}
                         <input name='id' value="{{ item.id }}" hidden>
                         <input name='index' value="{{ forloop.counter0 }}" hidden>
+                        <button type="submit" class="close" aria-label="Close"><span aria-hidden="true">&times;</span>
+                        </button>
                     </form>
-                </td>
-                <td>
-                    <button type="submit" class="close" aria-label="Close"><span aria-hidden="true">&times;</span>
-                    </button>
                 </td>
             </tr>
         {% endfor %}

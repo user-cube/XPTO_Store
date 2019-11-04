@@ -57,7 +57,7 @@ def signup(request):
 
     else:
         form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'signUp.html', {'form': form})
 
 
 def successregister(request):
