@@ -1,5 +1,6 @@
 from datetime import datetime
 from django.contrib.auth import login, authenticate
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -238,20 +239,21 @@ def addCart(request):
                 prods = request.session.__getitem__('products')
                 prods.append(request.POST['id'])
                 request.session.__setitem__('products', prods)
-            return redirect('home')
-
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
         else:
             return redirect('home')
     else:
         return redirect('login')
 
 def removeCart(request):
-    if request.method == 'POST':
-        index = request.POST['index']
-        products = request.session['products']
-        products.pop(int(index))
-        request.session.__setitem__('products', products)
-    return redirect('shoppingcart')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            index = request.POST['index']
+            products = request.session['products']
+            products.pop(int(index))
+            request.session.__setitem__('products', products)
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    return redirect('login')
 
 
 def shoppingCart(request):
