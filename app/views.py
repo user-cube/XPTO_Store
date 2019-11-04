@@ -262,6 +262,7 @@ def shoppingCart(request):
     total = 0
     items = []
     for i in request.session['products']:
+        print(i)
         prod = Items.objects.get(id=i)
         items.append(prod)
         total += prod.preco

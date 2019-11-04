@@ -46,18 +46,20 @@
                         <a class="nav-link" href="{% url 'find' %}">Find Us</a>
                     </li>
                 </ul>
-            {% if request.user.is_authenticated %}
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="cartDropdown" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false" style="font-size:22px;"><i class="fa fa-fw fa-shopping-cart"></i>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {% include 'cartpartial.html' %}
-                        </div>
-                    </li>
-                </ul>
-            {% endif %}
+                {% if request.user.is_authenticated %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="cartDropdown" role="button"
+                               data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false" style="font-size:22px;"><i
+                                    class="fa fa-fw fa-shopping-cart"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                {% include 'cartpartial.html' %}
+                            </div>
+                        </li>
+                    </ul>
+                {% endif %}
                 {% include 'loginpartial.html' %}
             </div>
         </div>

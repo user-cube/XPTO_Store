@@ -1,83 +1,83 @@
 {% extends 'layout.html' %}
 
 {% block content %}
- {% for row in database %}
-    <div class="row">
+    {% for row in database %}
+        <div class="row">
         <div class="col-lg-2">
             {% load safeTools %}
             <img src="{{ row.picture | spliter }}" class="img-responsive img-thumbnail ">
         </div>
         <div class="col-lg-10 ">
-            <form class="form-horizontal" method="post" action="/processedit" enctype="multipart/form-data">
-                {% csrf_token %}
-                    <div class="form-group">
-                        <label class="col-lg-4" for="Titulo">Título</label>
-                        <div class="col-lg-6">
-                            <div class="input-group">
-                                <input id="titulo" name="titulo" type="text"
-                                       placeholder="Título" class="form-control input-lg" value="{{ row.titulo }}"
-                                       required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-4" for="Short">Descrição breve</label>
-                        <div class="col-lg-6">
-                            <div class="input-group">
-                                <input id="short" name="short" type="text"
-                                       placeholder="Descrição breve" class="form-control input-lg"
-                                       value="{{ row.short }}" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-4" for="Descricao">Descrição longa</label>
-                        <div class="col-lg-6">
-                            <div class="input-group">
-                                <input id="descricao" name="descricao" type="text"
-                                       placeholder="Descrição alongada do artigo" class="form-control input-lg"
-                                       value="{{ row.descricao }}"
-                                       required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-4" for="Nome">Preço</label>
-                        <div class="col-lg-6">
-                            <div class="input-group">
-                                <input id="preco" name="preco" type="text"
-                                       placeholder="Preço do artigo" class="form-control input-lg"
-                                       value="{{ row.preco }}" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-lg-6">
-                            <div class="input-group">
-                                <input id="id" name="id" type="text"
-                                       placeholder="Preço do artigo" class="form-control input-lg"
-                                       value="{{ row.id }}" required hidden>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- File Button -->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="Upload photo">Upload photo</label>
-                        <div class="col-md-4">
-                            <input id="picture" name="picture" class="input-file" type="file">
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label class="col-md-4 control-label"></label>
-                        <div class="col-md-4">
-                            <input type="submit" value="Alterar item" class="btn btn-success"/>
-                        </div>
-                    </div>
-                {% endfor %}
-            </form>
+        <form class="form-horizontal" method="post" action="/processedit" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="col-lg-4" for="Titulo">Título</label>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <input id="titulo" name="titulo" type="text"
+                           placeholder="Título" class="form-control input-lg" value="{{ row.titulo }}"
+                           required>
+                </div>
+            </div>
         </div>
-    </div>
+        <div class="form-group">
+            <label class="col-lg-4" for="Short">Descrição breve</label>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <input id="short" name="short" type="text"
+                           placeholder="Descrição breve" class="form-control input-lg"
+                           value="{{ row.short }}" required>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-4" for="Descricao">Descrição longa</label>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <input id="descricao" name="descricao" type="text"
+                           placeholder="Descrição alongada do artigo" class="form-control input-lg"
+                           value="{{ row.descricao }}"
+                           required>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-4" for="Nome">Preço</label>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <input id="preco" name="preco" type="text"
+                           placeholder="Preço do artigo" class="form-control input-lg"
+                           value="{{ row.preco }}" required>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <input id="id" name="id" type="text"
+                           placeholder="Preço do artigo" class="form-control input-lg"
+                           value="{{ row.id }}" required hidden>
+                </div>
+            </div>
+        </div>
+
+        <!-- File Button -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="Upload photo">Upload photo</label>
+            <div class="col-md-4">
+                <input id="picture" name="picture" class="input-file" type="file">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-4 control-label"></label>
+            <div class="col-md-4">
+                <input type="submit" value="Alterar item" class="btn btn-success"/>
+            </div>
+        </div>
+    {% endfor %}
+</form>
+</div>
+</div>
 {% endblock %}

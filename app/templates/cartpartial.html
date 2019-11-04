@@ -4,17 +4,20 @@
 <div class="container">
     {% for item in products %}
         <table>
-        <tr>
-            <th style="width:80%";><a class="dropdown-item">{{ item.titulo }} {{ item.preco }} €</a></th>
-            <form action='/removecart' method='post'>
-                {% csrf_token %}
-                <input name='id' value="{{ item.id }}" hidden>
-                <input name='index' value="{{ forloop.counter0 }}" hidden>
-                <th><button type="submit" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></th>
-            </form>
-        </tr>
+            <tr>
+                <th style="width:80%" ;><a class="dropdown-item">{{ item.titulo }} {{ item.preco }} €</a></th>
+                <form action='/removecart' method='post'>
+                    {% csrf_token %}
+                    <input name='id' value="{{ item.id }}" hidden>
+                    <input name='index' value="{{ forloop.counter0 }}" hidden>
+                    <th>
+                        <button type="submit" class="close" aria-label="Close"><span aria-hidden="true">&times;</span>
+                        </button>
+                    </th>
+                </form>
+            </tr>
         </table>
         <div class="dropdown-divider"></div>
     {% endfor %}
-        <a style="width:100%"; href="/shoppingcart" class="btn btn-primary"> Cart</a>
+    <a style="width:100%" ; href="/shoppingcart" class="btn btn-primary"> Cart</a>
 </div>

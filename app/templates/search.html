@@ -52,7 +52,8 @@
             <div class="col-md-3 offset-1">
                 <div class="card" style="width: border-box">
                     {% load safeTools %}
-                    <img class="card-img-top" src="{{ row.picture | spliter }}" style="height: 280px" alt="{{ row.titulo }}">
+                    <img class="card-img-top" src="{{ row.picture | spliter }}" style="height: 280px"
+                         alt="{{ row.titulo }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ row.titulo }}</h5>
                         <p class="card-text">{{ row.short }}</p>
