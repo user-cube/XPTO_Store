@@ -44,5 +44,7 @@ urlpatterns = [
     path('shoppingcart/', views.shoppingCart, name="shoppingcart"),
     path('checkout/', views.checkout, name="checkout"),
     path('boughtlist/', views.bought, name="boughtlist"),
-    path('boughtSearch', views.boughtSearch, name="boughtSearch")
+    path('boughtSearch', views.boughtSearch, name="boughtSearch"),
+    path('boughtlistAdmin', views.boughtAdmin, name="boughtlistAdmin"),
+    path('boughtSearchAdmin', views.boughtSearchAdmin, name="boughtSearchAdmin"),
 ]

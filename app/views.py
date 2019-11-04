@@ -276,38 +276,47 @@ def checkout(request):
 
 
 def bought(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
-
-    if request.user.is_superuser:
-        database = Encomenda.objects.all()
+    if request.user.is_authenticated:
+        tparams = {
+            "database": Encomenda.objects.filter(user=request.user),
+            "year": datetime.now().year
+        }
+        return render(request, "salesList.html", tparams)
     else:
-        database = Encomenda.objects.filter(user=request.user)
-    tparams = {
-        "database": database,
-        "year": datetime.now().year
-    }
-
-    return render(request, "salesList.html", tparams)
-
+        return redirect('login'
+                        '')
+def boughtAdmin(request):
+    if request.user.is_superuser and request.user.is_authenticated:
+        tparams = {
+            "database": Encomenda.objects.all(),
+            "year": datetime.now().year
+        }
+        return render(request, "salesListAdmin.html", tparams)
+    else:
+        return redirect('home')
 
 def boughtSearch(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
-    if request.method == "GET":
-        pesquisa = request.GET['search']
-        if request.user.is_superuser:
-            database = Encomenda.objects.filter(produtos__titulo__contains=pesquisa)
+    if request.method == "GET" and 'search' in request.GET:
+        if request.user.is_authenticated:
+            tparams = {
+                "database": Encomenda.objects.filter(user=request.user, produtos__titulo__contains=request.GET['search']),
+                "year": datetime.now().year
+            }
+            return render(request, "salesList.html", tparams)
         else:
-            database = Encomenda.objects.filter(user=request.user, produtos__titulo__contains=pesquisa)
-
+            return redirect('login')
     else:
-        if request.user.is_superuser:
-            database = Encomenda.objects.all()
+        return redirect('home')
+
+def boughtSearchAdmin(request):
+    if request.method == "GET" and 'search' in request.GET :
+        if request.user.is_authenticated and request.user.is_superuser:
+            tparams = {
+                "database": Encomenda.objects.filter(produtos__titulo__contains=request.GET['search']),
+                "year": datetime.now().year
+            }
+            return render(request, "salesList.html", tparams)
         else:
-            database = Encomenda.objects.filter(user=request.user)
-    tparams = {
-        "database": database,
-        "year": datetime.now().year
-    }
-    return render(request, "salesList.html", tparams)
+            return redirect('login')
+    else:
+        return redirect('home')
