@@ -46,6 +46,7 @@
                         <a class="nav-link" href="{% url 'find' %}">Find Us</a>
                     </li>
                 </ul>
+            {% if request.user.is_authenticated %}
                 <ul class="nav navbar-nav navbar-right">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="cartDropdown" role="button" data-toggle="dropdown"
@@ -56,6 +57,7 @@
                         </div>
                     </li>
                 </ul>
+            {% endif %}
                 {% include 'loginpartial.html' %}
             </div>
         </div>

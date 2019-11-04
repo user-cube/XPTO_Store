@@ -227,16 +227,23 @@ def searchAdmin(request):
 
 
 def addCart(request):
-    id = request.POST['id']
-    if 'products' in request.session.keys():
-        prods = request.session.__getitem__('products')
-        prods.append(id)
-        request.session.__setitem__('products', prods)
-        print(request.session['products'])
-    else:
-        request.session.__setitem__('products', [])
-    return redirect('home')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            if 'products' in request.session.keys():
+                prods = request.session.__getitem__('products')
+                prods.append(request.POST['id'])
+                request.session.__setitem__('products', prods)
+            else:
+                request.session.__setitem__('products', [])
+                prods = request.session.__getitem__('products')
+                prods.append(request.POST['id'])
+                request.session.__setitem__('products', prods)
+            return redirect('home')
 
+        else:
+            return redirect('home')
+    else:
+        return redirect('login')
 
 def removeCart(request):
     if request.method == 'POST':
