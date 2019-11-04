@@ -340,4 +340,4 @@ def buyItem(request):
             return redirect('boughtlist')
         else:
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-    return redirect('home')
+    return redirect('login')
