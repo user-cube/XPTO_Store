@@ -7,5 +7,3 @@ admin.site.register(Items)
 admin.site.register(Profile)
 admin.site.register(wishlist)
 admin.site.register(Encomenda)
-
-# Encomenda.objects.all().delete()

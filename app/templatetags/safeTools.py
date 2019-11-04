@@ -2,6 +2,7 @@ from django import template
 
 register = template.Library()
 
+
 @register.filter(name='spliter')
 def spliter(value):
     value = str(value).split('/')[1:]
@@ -11,5 +12,5 @@ def spliter(value):
         a = a + i
         if len(value) > counter:
             a = a + '/'
-        counter +=1
+        counter += 1
     return a
