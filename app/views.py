@@ -287,7 +287,7 @@ def checkout(request):
 def bought(request):
     if request.user.is_authenticated:
         tparams = {
-            "database": Encomenda.objects.filter(user=request.user),
+            "database": Encomenda.objects.filter(user=request.user).order_by("-id"),
             "year": datetime.now().year
         }
         return render(request, "salesList.html", tparams)
@@ -297,7 +297,7 @@ def bought(request):
 def boughtAdmin(request):
     if request.user.is_superuser and request.user.is_authenticated:
         tparams = {
-            "database": Encomenda.objects.all(),
+            "database": Encomenda.objects.all().order_by("-id"),
             "year": datetime.now().year
         }
         return render(request, "salesListAdmin.html", tparams)
@@ -308,7 +308,7 @@ def boughtSearch(request):
     if request.method == "GET" and 'search' in request.GET:
         if request.user.is_authenticated:
             tparams = {
-                "database": Encomenda.objects.filter(user=request.user, produtos__titulo__contains=request.GET['search']),
+                "database": Encomenda.objects.filter(user=request.user, produtos__titulo__contains=request.GET['search']).order_by("-id"),
                 "year": datetime.now().year
             }
             return render(request, "salesList.html", tparams)
@@ -321,7 +321,7 @@ def boughtSearchAdmin(request):
     if request.method == "GET" and 'search' in request.GET :
         if request.user.is_authenticated and request.user.is_superuser:
             tparams = {
-                "database": Encomenda.objects.filter(produtos__titulo__contains=request.GET['search']),
+                "database": Encomenda.objects.filter(produtos__titulo__contains=request.GET['search']).order_by("-id"),
                 "year": datetime.now().year
             }
             return render(request, "salesList.html", tparams)
@@ -329,3 +329,15 @@ def boughtSearchAdmin(request):
             return redirect('login')
     else:
         return redirect('home')
+
+def buyItem(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            adder = Encomenda(user=request.user, produtos=Items.objects.get(id=request.POST['id']))
+            adder.preco = Items.objects.get(id=request.POST['id']).preco
+            adder.total = adder.preco * adder.quantidade
+            adder.save()
+            return redirect('boughtlist')
+        else:
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    return redirect('home')

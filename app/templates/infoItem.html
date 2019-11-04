@@ -14,15 +14,30 @@
                      height: 400px;">
         </div>
         <div class="container">
-            <h1 style="text-align: center">{{ row.titulo }}</h1>
-            <h2> {{ row.preco }}€</h2>
-            <h5> {{ row.descricao }}</h5>
-        </div>
-        <form action="addcart" method='post'>
-            {% csrf_token %}
-            <input name='id' value="{{ row.id }}" hidden>
-            <button type="submit" class="btn btn-primary"> Add to cart</button>
-        </form>
-    {% endfor %}
+            <div class="row">
+                <div class="col-lg-9 offset-1">
+                    <h1 style="text-align: center">{{ row.titulo }}</h1>
+                </div>
+                <div class="col-lg-1">
+                    <form action="addcart" method='post'>
+                        {% csrf_token %}
+                        <input name='id' value="{{ row.id }}" hidden>
+                        <button type="submit" class="btn btn-success"><i class="fa fa-shopping-cart"></i></button>
+                    </form>
 
+                </div>
+                <div class="col-lg-1">
+                    <form action="buyitem" method='post'>
+                        {% csrf_token %}
+                        <input name='id' value="{{ row.id }}" hidden>
+                        <button type="submit" class="btn btn-success"><i class="fa fa-credit-card"></i></button>
+                    </form>
+                </div>
+                <div class="col-lg-12">
+                    <h2> {{ row.preco }}€</h2>
+                    <h5> {{ row.descricao }}</h5>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}
