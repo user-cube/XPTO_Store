@@ -1,1 +1,1 @@
-web: gunicorn xpto_store.wsgi
+web: gunicorn TPW_Proj1.wsgi
