@@ -13,4 +13,4 @@ def spliter(value):
         if len(value) > counter:
             a = a + '/'
         counter += 1
-    return a
+    return a[:-1]
