@@ -1,3 +1,4 @@
 Pillow
 gunicorn
 django-heroku
+python-dotenv
