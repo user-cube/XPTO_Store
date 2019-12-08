@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block headers %}
-    {% load staticfiles %}
+    {% load static %}
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}"/>
 {% endblock %}
@@ -51,6 +51,6 @@
 
 
 {% block scripts %}
-    {% load staticfiles %}
+    {% load static %}
     <script src="{% static 'scripts/jquery.validate.min.js' %}"></script>
 {% endblock %}
