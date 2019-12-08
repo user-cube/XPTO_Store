@@ -14,3 +14,21 @@ Online Shop Store made with django framework.
 
 ## Authors
 * [Rui Coelho](https://github.com/user-cube/)
+
+## Deploy on Heroku
+Primeiro é preciso criar um Procfile:
+```shell
+echo 'web: gunicorn TPW_Proj1.wsgi' > Procfile
+```
+Alterar o ficheiro `settings.py` adicionando no topo:
+```python
+import django_heroku
+```
+E no final do documento acrescentar:
+```python
+django_heroku.settings(locals())
+```
+Adicionar aos requisitos:
+```
+django-heroku
+```
