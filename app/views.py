@@ -21,7 +21,7 @@ def home(request):
     return render(request, 'index.html', tparams)
 
 
-def contact(request):
+def findus(request):
     tparams = {
         'title': 'Find Us',
         'year': datetime.now().year,
@@ -269,6 +269,7 @@ def shoppingCart(request):
         prod = Items.objects.get(id=i)
         items.append(prod)
         total += prod.preco
+
     tparams = {
         'shoppingbag': items,
         'total': total
@@ -279,6 +280,7 @@ def shoppingCart(request):
 def checkout(request):
     if not request.user.is_authenticated:
         return redirect('login')
+
     for i in request.session['products']:
         adder = Encomenda(user=request.user, produtos=Items.objects.get(id=i))
         adder.preco = Items.objects.get(id=i).preco
@@ -351,25 +353,28 @@ def contact(request):
 
 def sendEmail(request):
     if request.method == 'POST':
-        print(request.POST)
         form = EmailForm(request.POST)
+
         if form.is_valid():
-            print(form.cleaned_data)
             name = form.cleaned_data.get('name')
             email = form.cleaned_data.get('email')
             phone = form.cleaned_data.get('phone')
             mensagem = form.cleaned_data.get('message')
 
-            if phone != "":
+            print(phone)
+
+            if phone != None:
                 send_mail(subject='Contacto de ' + name,
                           message= mensagem + "\nEste email foi enviado por: " + email + "\nContacto telefónico: " + str(phone),
                           from_email=os.getenv('EMAIL'),
                           recipient_list=[os.getenv('EMAIL_TO')]
                           )
             else:
-                send_mail('Contacto de ' + name,
-                          mensagem + "\nEste email foi enviado por: " + email,
-                          os.getenv('EMAIL'), [os.getenv('EMAIL')], fail_silently=False)
+                send_mail(subject='Contacto de ' + name,
+                          message=mensagem + "\nEste email foi enviado por: " + email,
+                          from_email=os.getenv('EMAIL'),
+                          recipient_list=[os.getenv('EMAIL_TO')]
+                          )
 
             messages.success(request, 'Email sent')
             return redirect('contact')

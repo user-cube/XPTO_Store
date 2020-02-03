@@ -16,8 +16,8 @@ class SignUpForm(UserCreationForm):
 class EmailForm(forms.Form):
     name = forms.CharField(max_length=30, required=True, help_text='Your name is required.')
     email = forms.EmailField(max_length=254, help_text='Your email is required.')
-    phone = forms.IntegerField()
-    message = forms.CharField()
+    phone = forms.IntegerField(required=False, help_text='Your phone number')
+    message = forms.CharField(required=True, help_text='Your message is required.')
 
     class Meta:
         model = Email
