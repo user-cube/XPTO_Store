@@ -294,6 +294,7 @@ def checkout(request):
               from_email=os.getenv('EMAIL'),
               recipient_list=[request.user.email]
               )
+    messages.info(request, "Compra efetuada com sucesso!")
     return redirect('boughtlist')
 
 
