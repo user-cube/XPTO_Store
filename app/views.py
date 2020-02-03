@@ -278,6 +278,7 @@ def shoppingCart(request):
 
 
 def checkout(request):
+
     if not request.user.is_authenticated:
         return redirect('login')
 
@@ -287,6 +288,12 @@ def checkout(request):
         adder.total = adder.preco * adder.quantidade
         adder.save()
         request.session.__setitem__('products', [])
+
+    send_mail(subject='Compra efetuada com sucesso',
+              message='A tua compra já se encontra disponível no painel de itens comprados.\nPodes aceder em: https://xpto-store.herokuapp.com/boughtlist/\nGratos pela tua preferência,\nXPTO Store',
+              from_email=os.getenv('EMAIL'),
+              recipient_list=[request.user.email]
+              )
     return redirect('boughtlist')
 
 
