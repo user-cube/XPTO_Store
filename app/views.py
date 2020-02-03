@@ -1,11 +1,15 @@
 from datetime import datetime
-from django.contrib.auth import login, authenticate
+
+from django.contrib import messages
+from django.contrib.auth import authenticate
+from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from app.forms import SignUpForm
+from app.forms import SignUpForm, EmailForm
 from app.models import Items, Profile, Encomenda
+import os
 
 
 def home(request):
@@ -341,3 +345,33 @@ def buyItem(request):
         else:
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
     return redirect('login')
+
+def contact(request):
+    return render(request, 'contactUS.html')
+
+def sendEmail(request):
+    if request.method == 'POST':
+        print(request.POST)
+        form = EmailForm(request.POST)
+
+        print(form.data)
+
+        print(type(os.getenv('PORT')))
+        if form.is_valid():
+            print(form.cleaned_data)
+            name = form.cleaned_data.get('name')
+            email = form.cleaned_data.get('email')
+            phone = form.cleaned_data.get('phone')
+            message = form.cleaned_data.get('message')
+
+            if phone != "":
+                send_mail('Contacto de ' + name,
+                          message + "\nEste email foi enviado por: " + email + "\nContacto telefónico: " + str(phone),
+                          os.getenv('EMAIL'), [os.getenv('EMAIL_TO')], fail_silently=False)
+            else:
+                send_mail('Contacto de ' + name,
+                          message + "\nEste email foi enviado por: " + email,
+                          os.getenv('EMAIL'), [os.getenv('EMAIL')], fail_silently=False)
+
+            messages.success(request, 'Email sent')
+            return redirect('contact')

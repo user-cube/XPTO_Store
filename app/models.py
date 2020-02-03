@@ -50,3 +50,12 @@ class Encomenda(models.Model):
 
     def __str__(self):
         return self.id.__str__()
+
+class Email(models.Model):
+    name = models.CharField(max_length=30)
+    email = models.EmailField(max_length=254)
+    phone = models.Field()
+    message = models.Field()
+
+    def __str__(self):
+        return self.id.__str__()
