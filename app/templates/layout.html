@@ -45,6 +45,10 @@
                         {% else %}class="nav-item"{% endif %}>
                         <a class="nav-link" href="{% url 'find' %}">Find Us</a>
                     </li>
+                    <li {% if request.resolver_match.url_name == 'contact' %}class="nav-item active"
+                        {% else %}class="nav-item"{% endif %}>
+                        <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
+                    </li>
                 </ul>
                 {% if request.user.is_authenticated %}
                     <ul class="nav navbar-nav navbar-right">
