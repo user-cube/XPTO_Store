@@ -350,6 +350,12 @@ def buyItem(request):
             adder.preco = Items.objects.get(id=request.POST['id']).preco
             adder.total = adder.preco * adder.quantidade
             adder.save()
+            send_mail(subject='Compra efetuada com sucesso',
+                      message='A tua compra já se encontra disponível no painel de itens comprados.\nPodes aceder em: https://xpto-store.herokuapp.com/boughtlist/\nGratos pela tua preferência,\nXPTO Store',
+                      from_email=os.getenv('EMAIL'),
+                      recipient_list=[request.user.email]
+                      )
+            messages.info(request, "Compra efetuada com sucesso!")
             return redirect('boughtlist')
         else:
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
