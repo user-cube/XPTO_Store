@@ -16,6 +16,8 @@
     <!-- Custom icons for this template -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/cart.css' %}">
+
 
     {% block headers %} {% endblock %}
 </head>
@@ -55,8 +57,8 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="cartDropdown" role="button"
                                data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false" style="font-size:22px;"><i
-                                    class="fa fa-fw fa-shopping-cart"></i>
+                               aria-haspopup="true" aria-expanded="false" style="font-size:22px;"><i class="fa" style="font-size:24px">&#xf07a;</i>
+                                <span class='badge badge-warning' id='lblCartCount'> {% if 'products' in request.session %} {{ request.session.products | length }} {% else %} 0 {% endif %}</span>
                             </a>
                             <div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="navbarDropdown">
                                 {% include 'cartpartial.html' %}
@@ -87,6 +89,5 @@
 <script src="{% static 'scripts/jquery-3.4.1.min.js' %}"></script>
 <script src="{% static 'scripts/popper.min.js' %}"></script>
 <script src="{% static 'scripts/bootstrap.min.js' %}"></script>
-
 </body>
 </html>
