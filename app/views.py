@@ -353,24 +353,22 @@ def sendEmail(request):
     if request.method == 'POST':
         print(request.POST)
         form = EmailForm(request.POST)
-
-        print(form.data)
-
-        print(type(os.getenv('PORT')))
         if form.is_valid():
             print(form.cleaned_data)
             name = form.cleaned_data.get('name')
             email = form.cleaned_data.get('email')
             phone = form.cleaned_data.get('phone')
-            message = form.cleaned_data.get('message')
+            mensagem = form.cleaned_data.get('message')
 
             if phone != "":
-                send_mail('Contacto de ' + name,
-                          message + "\nEste email foi enviado por: " + email + "\nContacto telefónico: " + str(phone),
-                          os.getenv('EMAIL'), [os.getenv('EMAIL_TO')], fail_silently=False)
+                send_mail(subject='Contacto de ' + name,
+                          message= mensagem + "\nEste email foi enviado por: " + email + "\nContacto telefónico: " + str(phone),
+                          from_email=os.getenv('EMAIL'),
+                          recipient_list=[os.getenv('EMAIL_TO')]
+                          )
             else:
                 send_mail('Contacto de ' + name,
-                          message + "\nEste email foi enviado por: " + email,
+                          mensagem + "\nEste email foi enviado por: " + email,
                           os.getenv('EMAIL'), [os.getenv('EMAIL')], fail_silently=False)
 
             messages.success(request, 'Email sent')
