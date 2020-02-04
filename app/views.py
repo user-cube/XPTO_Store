@@ -416,10 +416,21 @@ def openCharts(request):
     if request.user.is_superuser:
         stock = Items.objects.all()
         lista = [['Items', 'Quantidade']]
-        temp = []
         for i in stock:
-            temp = [i.titulo, i.quantidade]
-            lista.append(temp)
+            lista.append([i.titulo, i.quantidade])
         return render(request, 'charts.html', {'lista':lista})
+    else:
+        raise PermissionDenied()
+
+def analiseMes(request):
+    if request.user.is_superuser:
+        x = datetime.now()
+        print(x.year)
+        print(x.month)
+        vendas = Encomenda.objects.filter(data__month=x.month, data__year=x.year)
+        lista = [['Item', 'Quantidade']]
+        for i in vendas:
+            lista.append([i.produtos.titulo, i.quantidade])
+        return render(request, 'analiseVendas.html', {'lista':lista})
     else:
         raise PermissionDenied()

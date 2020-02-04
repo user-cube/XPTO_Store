@@ -2,11 +2,13 @@
     <form id="logoutForm" action="/logout" method="post" class="navbar-right">
         {% csrf_token %}
         <ul class="navbar-nav mr-auto">
-            <li {% if request.resolver_match.url_name == 'boughtlist' %}class="nav-item active"{% endif %}
-                {% if request.resolver_match.url_name == 'boughtSearch' %}class="nav-item active"
-                {% else %}class="nav-item"{% endif %}>
-                <a class="nav-link" href="{% url 'boughtlist' %}">My Items</a>
-            </li>
+            {% if not user.is_superuser %}
+                <li {% if request.resolver_match.url_name == 'boughtlist' %}class="nav-item active"{% endif %}
+                    {% if request.resolver_match.url_name == 'boughtSearch' %}class="nav-item active"
+                    {% else %}class="nav-item"{% endif %}>
+                    <a class="nav-link" href="{% url 'boughtlist' %}">My Items</a>
+                </li>
+            {% endif %}
             {% if user.is_superuser %}
                 <li {% if request.resolver_match.url_name == 'adminpanel' %}class="nav-item active"{% endif %}
                     {% if request.resolver_match.url_name == 'searchadmin' %}class="nav-item active"

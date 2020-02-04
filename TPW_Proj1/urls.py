@@ -50,5 +50,6 @@ urlpatterns = [
     path('boughtlistAdmin', views.boughtAdmin, name="boughtlistAdmin"),
     path('boughtSearchAdmin', views.boughtSearchAdmin, name="boughtSearchAdmin"),
     path('buyitem', views.buyItem, name='buyitem'),
-    path('analysis/', views.openCharts, name='analysis')
+    path('analysis/', views.openCharts, name='analysis'),
+    path('salesMonth/',views.analiseMes, name="mes")
 ]

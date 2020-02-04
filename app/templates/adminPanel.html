@@ -41,7 +41,7 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th><a href="/additem" class="btn btn-success"> Add Item</a></th>
+            <th><a href="{% url 'additem' %}" class="btn btn-success"> Add Item</a></th>
             <th>
                 <form class="example" action="/searchadmin" method="get">
                     <input type="text" placeholder="Search.." name="search">
@@ -49,7 +49,7 @@
                 </form>
             </th>
             <th></th>
-            <th></th>
+            <th><a href="{% url 'analysis' %}" class="btn btn-warning">Análise de Stock</a></th>
         </tr>
         <tr>
             <th>ID</th>
