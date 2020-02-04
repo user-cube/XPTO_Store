@@ -24,7 +24,7 @@
                         <form action="addcart" method='post'>
                             {% csrf_token %}
                             <input name='id' value="{{ row.id }}" hidden>
-                            <button type="submit" class="btn btn-success"><i class="fa fa-shopping-cart"></i></button>
+                            <button type="submit" class="btn btn-success" ><i class="fa fa-shopping-cart"></i></button>
                         </form>
 
                     </div>
@@ -32,7 +32,7 @@
                         <form action="buyitem" method='post'>
                             {% csrf_token %}
                             <input name='id' value="{{ row.id }}" hidden>
-                            <button type="submit" class="btn btn-success"><i class="fa fa-credit-card"></i></button>
+                            <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure?');"><i class="fa fa-credit-card"></i></button>
                         </form>
                     </div>
                 {% endif %}

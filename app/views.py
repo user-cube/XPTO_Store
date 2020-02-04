@@ -11,6 +11,7 @@ from django.shortcuts import render, redirect
 from app.forms import SignUpForm, EmailForm
 from app.models import Items, Profile, Encomenda
 import os
+from django.db.models import Count
 
 
 def home(request):
@@ -425,12 +426,12 @@ def openCharts(request):
 def analiseMes(request):
     if request.user.is_superuser:
         x = datetime.now()
-        print(x.year)
-        print(x.month)
-        vendas = Encomenda.objects.filter(data__month=x.month, data__year=x.year)
+        vendas = Encomenda.objects.filter(data__month=x.month, data__year=x.year).values('produtos_id').annotate(num=Count('produtos'))
         lista = [['Item', 'Quantidade']]
         for i in vendas:
-            lista.append([i.produtos.titulo, i.quantidade])
+            nome = Items.objects.filter(id=i['produtos_id'])
+            for u in nome:
+                lista.append([u.titulo, i['num']])
         return render(request, 'analiseVendas.html', {'lista':lista})
     else:
         raise PermissionDenied()

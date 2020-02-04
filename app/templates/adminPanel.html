@@ -44,12 +44,12 @@
             <th><a href="{% url 'additem' %}" class="btn btn-success"> Add Item</a></th>
             <th>
                 <form class="example" action="/searchadmin" method="get">
-                    <input type="text" placeholder="Search.." name="search">
+                    <input type="text" placeholder="Search.." name="search" required>
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </form>
             </th>
-            <th></th>
             <th><a href="{% url 'analysis' %}" class="btn btn-warning">Análise de Stock</a></th>
+            <th><a href="{% url 'analysisMonth' %}" class="btn btn-warning">Análise de Vendas</a></th>
         </tr>
         <tr>
             <th>ID</th>
