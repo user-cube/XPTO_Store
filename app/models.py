@@ -13,6 +13,7 @@ class Items(models.Model):
     descricao = models.CharField(max_length=5000)
     short = models.CharField(max_length=50)
     preco = models.DecimalField(max_digits=11, decimal_places=2, default=0)
+    quantidade = models.IntegerField(default=0)
 
     def __str__(self):
         return self.titulo
@@ -54,8 +55,8 @@ class Encomenda(models.Model):
 class Email(models.Model):
     name = models.CharField(max_length=30)
     email = models.EmailField(max_length=254)
-    phone = models.Field()
-    message = models.Field()
+    phone = models.IntegerField()
+    message = models.TextField()
 
     def __str__(self):
         return self.id.__str__()

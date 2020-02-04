@@ -82,9 +82,27 @@ def getItem(request):
 def search(request):
     if request.method == 'GET':
         pesquisa = request.GET['search']
-        tparams = {
-            'database': Items.objects.filter(titulo__contains=pesquisa)
-        }
+        tipo = request.GET['pesquisa']
+        if tipo == "nome":
+            tparams = {
+                'database': Items.objects.filter(titulo__contains=pesquisa)
+            }
+        if tipo == "desc":
+            tparams = {
+                'database': Items.objects.filter(descricao__contains=pesquisa)
+            }
+        if tipo == "disp":
+            tparams = {
+                'database': Items.objects.filter(quantidade__gt=0)
+            }
+        if tipo == "precoa":
+            tparams = {
+                'database': Items.objects.all().order_by("preco")
+            }
+        if tipo == "precod":
+            tparams = {
+                'database': Items.objects.all().order_by("-preco")
+            }
         return render(request, 'search.html', tparams)
     else:
         return redirect('home')
