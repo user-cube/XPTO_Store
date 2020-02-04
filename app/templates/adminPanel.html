@@ -54,6 +54,7 @@
         <tr>
             <th>ID</th>
             <th>Título</th>
+            <th>Stock</th>
             <th>Editar</th>
             <th>Apagar</th>
         </tr>
@@ -63,6 +64,7 @@
             <tr>
                 <td>{{ row.id }}</td>
                 <td><a href="/infoItem?titulo={{ row.id }}" target="_blank">{{ row.titulo }}</a></td>
+                <td>{{ row.quantidade }}</td>
                 <td><a href="/edititem?id={{ row.id }}" class="btn btn-primary"><i class="fa fa-edit"></i></a></td>
                 <td><a href="/deleteitem?id={{ row.id }}" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
             </tr>

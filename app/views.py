@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.contrib import messages
 from django.contrib.auth import authenticate
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -410,3 +411,15 @@ def sendEmail(request):
 
             messages.success(request, 'Email sent')
             return redirect('contact')
+
+def openCharts(request):
+    if request.user.is_superuser:
+        stock = Items.objects.all()
+        lista = [['Items', 'Quantidade']]
+        temp = []
+        for i in stock:
+            temp = [i.titulo, i.quantidade]
+            lista.append(temp)
+        return render(request, 'charts.html', {'lista':lista})
+    else:
+        raise PermissionDenied()
