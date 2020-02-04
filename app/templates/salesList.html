@@ -50,18 +50,20 @@
         {% endfor %}
     {% endif %}
 
-    <div class="col-lg-12">
-        <form class="example" action="/boughtSearch" method="get">
-            <input type="text" placeholder="Search.." name="search" required>
-            <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
-    </div>
-    <br>
-
-
     <div class="table-responsive">
         <table class="table">
             <thead>
+            <tr>
+                <th><a href="{% url 'analysisUser' %}" class="btn btn-success"> Estatísticas</a></th>
+                <th>
+                    <form class="example" action="{% url 'boughtSearch' %}" method="get">
+                        <input type="text" placeholder="Search.." name="search" required>
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
             <tr>
                 <th>Product</th>
                 <th>Quantity</th>

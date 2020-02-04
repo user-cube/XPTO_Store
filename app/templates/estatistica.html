@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+
+{% block headers %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages': ['bar']});
+        google.charts.setOnLoadCallback(drawStuff);
+
+        console.log({{ lista | safe }});
+
+        function drawStuff() {
+            var data = new google.visualization.arrayToDataTable({{ lista | safe }});
+
+            var options = {
+                width: 800,
+                chart: {
+                    title: 'Compras do utilizador',
+                    subtitle: 'Análise do stock da loja'
+                },
+                bars: 'vertical', // Required for Material Bar Charts.
+                series: {
+                    0: {axis: 'Compras por produto'}, // Bind series 0 to an axis named 'distance'.
+                },
+                axes: {
+                    x: {
+                        distance: {label: 'parsecs'}, // Bottom x-axis.
+                        brightness: {side: 'top', label: 'apparent magnitude'} // Top x-axis.
+                    }
+                }
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('dual_x_div'));
+            chart.draw(data, options);
+        };
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="row" style="text-align: center">
+        <div class="col-lg-12">
+            <h2>Estatísticas de compras</h2>
+            <br>
+        </div>
+        <div class="col-lg-5">
+            {% for row in database %}
+                {% load safeTools %}
+                <img src="{{ row.picture | spliter }}">
+            {% endfor %}
+        </div>
+        <div class="col-lg-6" style="text-align: left">
+            </strong><h5>Dinheiro gasto:</h5></strong> <p>{{ dinheiro }}€</p>
+            <strong><h5>Número de compras:</h5></strong>
+            <p>{{ compras }}</p>
+            <div id="dual_x_div" style="width: 60%; height: 400px;"></div>
+        </div>
+    </div>
+{% endblock %}

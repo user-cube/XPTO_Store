@@ -11,7 +11,7 @@ from django.shortcuts import render, redirect
 from app.forms import SignUpForm, EmailForm
 from app.models import Items, Profile, Encomenda
 import os
-from django.db.models import Count, F
+from django.db.models import Count, F, Sum
 
 
 def home(request):
@@ -423,3 +423,29 @@ def analiseMes(request):
         return render(request, 'analiseVendas.html', {'lista':lista})
     else:
         raise PermissionDenied()
+
+def analise(request):
+    if request.user.is_authenticated and not request.user.is_superuser:
+        dinheiro = Encomenda.objects.filter(user=request.user).aggregate(Sum('total'))
+        compras = Encomenda.objects.filter(user=request.user).aggregate(Count('id'))
+
+        vendas = Encomenda.objects.filter(user=request.user).values('produtos_id').annotate(
+            num=Count('produtos'))
+        lista = [['Item', 'Quantidade']]
+        for i in vendas:
+            nome = Items.objects.filter(id=i['produtos_id'])
+            for u in nome:
+                lista.append([u.titulo, i['num']])
+
+        tparams = {
+            'database': Profile.objects.filter(user=request.user),
+            'dinheiro': dinheiro['total__sum'],
+            'compras': compras['id__count'],
+            'lista': lista
+        }
+        return render(request, 'estatistica.html', tparams)
+    else:
+        if request.user.is_superuser:
+            raise PermissionDenied()
+        else:
+            redirect('login')
