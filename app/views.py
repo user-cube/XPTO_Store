@@ -11,7 +11,7 @@ from django.shortcuts import render, redirect
 from app.forms import SignUpForm, EmailForm
 from app.models import Items, Profile, Encomenda
 import os
-from django.db.models import Count
+from django.db.models import Count, F
 
 
 def home(request):
@@ -60,7 +60,6 @@ def signup(request):
                                pais=request.POST['pais'])
             profiler.save()
             return redirect('login')
-
     else:
         form = SignUpForm()
     return render(request, 'signUp.html', {'form': form})
@@ -150,11 +149,6 @@ def updateProfile(request):
             if 'picture' in request.FILES:
                 profiler.picture = request.FILES['picture']
                 profiler.save()
-
-            tparams = {
-                'database': Profile.objects.filter(user=request.user),
-                'user': request.user
-            }
             return redirect('profileedit')
 
 
@@ -180,7 +174,7 @@ def processAdd(request):
         if request.user.is_authenticated and request.user.is_superuser:
             adder = Items(titulo=request.POST['titulo'], short=request.POST['short'],
                           descricao=request.POST['descricao'], preco=request.POST['preco'],
-                          picture=request.FILES['picture'])
+                          picture=request.FILES['picture'], quantidade=request.POST['quantidade'])
             adder.save()
             return redirect('adminpanel')
         else:
@@ -206,22 +200,14 @@ def processEdit(request):
     if request.method == 'POST':
         if request.user.is_authenticated and request.user.is_superuser:
             items = Items.objects.get(id=request.POST['id'])
-            if 'titulo' in request.POST:
-                items.titulo = request.POST['titulo']
-                items.save()
-            if 'short' in request.POST:
-                items.short = request.POST['short']
-                items.save()
-            if 'descricao' in request.POST:
-                items.descricao = request.POST['descricao']
-                items.save()
-            if 'preco' in request.POST:
-                items.preco = request.POST['preco']
-                items.save()
+            items.short = request.POST['short']
+            items.titulo = request.POST['titulo']
+            items.descricao = request.POST['descricao']
+            items.preco = request.POST['preco']
             if 'picture' in request.FILES:
                 items.picture = request.FILES['picture']
-                items.save()
-
+            items.quantidade = request.POST['quantidade']
+            items.save()
             return redirect('/edititem?id=' + request.POST['id'])
         else:
             return redirect('home')
@@ -307,6 +293,7 @@ def checkout(request):
         adder.preco = Items.objects.get(id=i).preco
         adder.total = adder.preco * adder.quantidade
         adder.save()
+        Items.objects.filter(id=i).update(quantidade=F('quantidade') - 1)
         request.session.__setitem__('products', [])
 
     send_mail(subject='Compra efetuada com sucesso',
@@ -371,6 +358,9 @@ def buyItem(request):
             adder.preco = Items.objects.get(id=request.POST['id']).preco
             adder.total = adder.preco * adder.quantidade
             adder.save()
+
+            Items.objects.filter(id=request.POST['id']).update(quantidade=F('quantidade') - 1)
+
             send_mail(subject='Compra efetuada com sucesso',
                       message='A tua compra já se encontra disponível no painel de itens comprados.\nPodes aceder em: https://xpto-store.herokuapp.com/boughtlist/\nGratos pela tua preferência,\nXPTO Store',
                       from_email=os.getenv('EMAIL'),
@@ -394,8 +384,6 @@ def sendEmail(request):
             email = form.cleaned_data.get('email')
             phone = form.cleaned_data.get('phone')
             mensagem = form.cleaned_data.get('message')
-
-            print(phone)
 
             if phone != None:
                 send_mail(subject='Contacto de ' + name,
