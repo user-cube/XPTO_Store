@@ -449,3 +449,20 @@ def analise(request):
             raise PermissionDenied()
         else:
             redirect('login')
+
+def evolucao(request):
+    if request.user.is_authenticated and not request.user.is_superuser:
+        encomendas = Encomenda.objects.filter(user=request.user).values('produtos_id', 'data').annotate(
+            num=Count('produtos'))
+
+        lista = []
+        for i in encomendas:
+            print(i)
+            lista.append([i['data'].strftime("%m/%d/%Y"), i['num']])
+
+        return render(request, 'compras.html', {'lista':lista})
+    else:
+        if request.user.is_superuser:
+            raise PermissionDenied()
+        else:
+            redirect('login')
