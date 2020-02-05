@@ -4,11 +4,11 @@
     {% for row in database %}
         <div class="row">
         <div class="col-lg-2">
-            {% load static %}
-            <img src="{% static row.picture %}" class="img-responsive img-thumbnail ">
+            {% load safeTools %}
+            <img src="{{ row.picture | spliter }}" class="img-responsive img-thumbnail ">
         </div>
         <div class="col-lg-10 ">
-            <form class="form-horizontal" method="post" action="/updateProfile" enctype="multipart/form-data">
+            <form class="form-horizontal" method="post" action="{% url 'updateProfile' %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
                     <label class="col-lg-4" for="Nome">Nome</label>
