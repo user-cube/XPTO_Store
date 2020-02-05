@@ -389,13 +389,13 @@ def sendEmail(request):
                 send_mail(subject='Contacto de ' + name,
                           message= mensagem + "\nEste email foi enviado por: " + email + "\nContacto telefónico: " + str(phone),
                           from_email=os.getenv('EMAIL'),
-                          recipient_list=[os.getenv('EMAIL_TO')]
+                          recipient_list=[os.getenv('EMAIL_TO'), os.getenv('EMAIL'), email]
                           )
             else:
                 send_mail(subject='Contacto de ' + name,
                           message=mensagem + "\nEste email foi enviado por: " + email,
                           from_email=os.getenv('EMAIL'),
-                          recipient_list=[os.getenv('EMAIL_TO')]
+                          recipient_list=[os.getenv('EMAIL_TO'), os.getenv('EMAIL'), email]
                           )
 
             messages.success(request, 'Email sent')
