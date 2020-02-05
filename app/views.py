@@ -460,9 +460,23 @@ def evolucao(request):
             print(i)
             lista.append([i['data'].strftime("%m/%d/%Y"), i['num']])
 
-        return render(request, 'compras.html', {'lista':lista})
+        return render(request, 'compras.html', {'lista':lista, 'header': 'Compras ao longo do tempo'})
     else:
         if request.user.is_superuser:
             raise PermissionDenied()
         else:
             redirect('login')
+
+def evolucaoAdmin(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        encomendas = Encomenda.objects.all().values('produtos_id', 'data').annotate(
+            num=Count('produtos'))
+
+        lista = []
+        for i in encomendas:
+            print(i)
+            lista.append([i['data'].strftime("%m/%d/%Y"), i['num']])
+
+        return render(request, 'compras.html', {'lista': lista, 'header': 'Compras ao longo do tempo'})
+    else:
+        raise PermissionDenied()

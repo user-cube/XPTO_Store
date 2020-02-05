@@ -53,5 +53,6 @@ urlpatterns = [
     path('analysis/', views.openCharts, name='analysis'),
     path('analysisMonth/',views.analiseMes, name="analysisMonth"),
     path('analysisUser/', views.analise, name="analysisUser"),
-    path('evolution/', views.evolucao, name="evolution")
+    path('evolution/', views.evolucao, name="evolution"),
+    path('evolutionAdmin/', views.evolucaoAdmin, name="evolutionadmin"),
 ]
