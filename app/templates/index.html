@@ -41,7 +41,7 @@
 
 {% block content %}
     <div class="col-lg-11 offset-1" style="text-align: center">
-        <form class="example" action="/search" method="get">
+        <form class="example" action="{% url 'search' %}" method="get">
             <input type="text" placeholder="Search.." name="search">
             <button type="submit"><i class="fa fa-search"></i></button>
             <input type="radio" name="pesquisa" value="nome" checked> Nome

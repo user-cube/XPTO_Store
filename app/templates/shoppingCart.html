@@ -16,7 +16,7 @@
                 <td>{{ product.preco }} €</td>
                 <td></td>
                 <td>
-                    <form action='/removecart' method='post'>
+                    <form action='{% url 'removecart' %}' method='post'>
                         {% csrf_token %}
                         <input name='id' value="{{ item.id }}" hidden>
                         <input name='index' value="{{ forloop.counter0 }}" hidden>
@@ -30,7 +30,7 @@
             <td>Total</td>
             <td>{{ total }} €</td>
             <td></td>
-            <td><a href="/checkout" class="btn btn-primary"> Checkout</a></td>
+            <td><a href="{% url 'checkout' %}" class="btn btn-primary"> Checkout</a></td>
         </tr>
         </tbody>
     </table>

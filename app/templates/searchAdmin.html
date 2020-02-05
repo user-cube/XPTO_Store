@@ -43,7 +43,7 @@
         <tr>
             <th><a href="{% url 'additem' %}" class="btn btn-success"> Add Item</a></th>
             <th>
-                <form class="example" action="/searchadmin" method="get">
+                <form class="example" action="{% url 'searchadmin' %}" method="get">
                     <input type="text" placeholder="Search.." name="search" required>
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </form>

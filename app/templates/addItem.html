@@ -7,7 +7,7 @@
             <img src="{% static 'img/default_item.jpg' %}" class="img-responsive img-thumbnail ">
         </div>
         <div class="col-lg-10 ">
-            <form class="form-horizontal" method="post" action="/processadd" enctype="multipart/form-data">
+            <form class="form-horizontal" method="post" action="{% url 'processadd' %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
                     <label class="col-lg-4" for="Titulo">Título</label>
