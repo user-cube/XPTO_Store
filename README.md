@@ -2,16 +2,6 @@
 
 Online Shop Store made with django framework.
 
-## Main functionalities
-* Login/logout made with built-in django authentication system.
-* Admin panel to add, edit or delete items.
-* List of all bought items by all costumers.
-* List of "my purchases"
-* Shopping cart
-* Profile view
-* Profile edit with picture upload
-* Sign Up form
-
 ## Authors
 * [Rui Coelho](https://github.com/user-cube/)
 
@@ -31,4 +21,42 @@ django_heroku.settings(locals())
 Adicionar aos requisitos:
 ```
 django-heroku
+```
+## Migrate to PostgreSQL
+In order to achieve that, do the following steps in order :
+```shell script
+$ python manage.py dumpdata > db.json
+```
+Change the database settings to new database such as of MySQL / PostgreSQL.
+```python
+import os
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASS'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
+    }
+}
+```
+Note: We must create an .env file and add the following lines to `settings.py`
+```python
+from dotenv import load_dotenv
+load_dotenv()
+```
+```shell script
+$ python manage.py migrate
+$ python manage.py shell
+```
+Enter the following in the shell
+```python
+from django.contrib.contenttypes.models import ContentType
+ContentType.objects.all().delete()
+```
+After that we only need to load the previous dataset into the new database
+```shell script
+$ python manage.py loaddata db.json
 ```
